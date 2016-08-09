@@ -1,5 +1,6 @@
 /* eslint-disable */
 var path = require('path');
+var historyApiFallback = require('connect-history-api-fallback');
 var chalk = require('chalk');
 var express = require('express');
 var favicon = require('serve-favicon');
@@ -27,6 +28,10 @@ compiler.plugin('done', (stats) => {
 // Launch server
 
 var app = express();
+
+app.use(historyApiFallback({
+  verbose: false
+}));
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,

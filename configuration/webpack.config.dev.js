@@ -22,6 +22,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.json'],
+    packageMains: [
+      'jsnext:main',
+      'main',
+    ],
   },
   resolveLoader: {
     root: node_modules,
