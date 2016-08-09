@@ -1,12 +1,7 @@
-require('babel-register')({
-  presets: [
-    'babel-preset-es2015',
-    'babel-preset-stage-0',
-    'babel-preset-react',
-  ],
-  plugins: ['react-hot-loader/babel'],
-});
+var babelConfig = require('../configuration/babel.test.js');
+require('babel-register')(babelConfig);
 
+// Deobfuscate CSS modules classes for testing
 require('css-modules-require-hook')({
   generateScopedName: '[local]',
 });

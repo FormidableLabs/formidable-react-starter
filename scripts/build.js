@@ -7,7 +7,7 @@ var filesize = require('filesize');
 var gzipSize = require('gzip-size').sync;
 var rimrafSync = require('rimraf').sync;
 var webpack = require('webpack');
-var config = require('../config/webpack.config.prod');
+var config = require('../configuration/webpack.config.prod');
 
 rimrafSync(path.resolve('build') + '/*');
 

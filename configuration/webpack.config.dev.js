@@ -9,8 +9,7 @@ var node_modules = path.resolve('node_modules');
 module.exports = {
   devtool: 'eval',
   entry: [
-    require.resolve('webpack-dev-server/client') + '?/',
-    require.resolve('webpack/hot/only-dev-server'),
+    'webpack-hot-middleware/client?quiet=true&noInfo=true',
     require.resolve('react-hot-loader/patch'),
     require.resolve('./polyfills'),
     path.join(src, 'index'),
@@ -73,7 +72,7 @@ module.exports = {
     ],
   },
   eslint: {
-    configFile: path.resolve('./config/eslint.js'),
+    configFile: path.resolve('./configuration/eslint.js'),
     useEslintrc: false,
   },
   postcss: function() {
