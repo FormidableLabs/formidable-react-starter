@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+import Redbox from 'redbox-react';
 
 import Routes from './routes';
 import './index.css';
 
 ReactDOM.render(
-  <AppContainer>
+  <AppContainer errorReporter={Redbox}>
     <Routes />
   </AppContainer>,
   document.getElementById('root')
@@ -26,7 +27,7 @@ if (module.hot) {
     const RoutesUpdate = require('./routes').default;
 
     ReactDOM.render(
-      <AppContainer>
+      <AppContainer errorReporter={Redbox}>
         <RoutesUpdate />
       </AppContainer>,
       document.getElementById('root')
