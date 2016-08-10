@@ -11,7 +11,7 @@ module.exports = {
   entry: [
     'webpack-hot-middleware/client?quiet=true&noInfo=true',
     require.resolve('react-hot-loader/patch'),
-    require.resolve('./polyfills'),
+    require.resolve('../polyfills/polyfills'),
     path.join(src, 'index'),
   ],
   output: {
@@ -44,7 +44,7 @@ module.exports = {
         test: /\.js$/,
         include: src,
         loader: 'babel',
-        query: require('./babel.dev'),
+        query: require('../babel/babel.dev'),
       },
       {
         test: /\.css$/,
@@ -76,7 +76,7 @@ module.exports = {
     ],
   },
   eslint: {
-    configFile: path.resolve('./configuration/eslint.js'),
+    configFile: path.resolve('./configuration/eslint/eslint.js'),
     useEslintrc: false,
   },
   postcss: function() {

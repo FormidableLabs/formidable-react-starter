@@ -1,4 +1,4 @@
-var babelConfig = require('../configuration/babel.test.js');
+var babelConfig = require('../configuration/babel/babel.test.js');
 require('babel-register')(babelConfig);
 
 // Deobfuscate CSS modules classes for testing

@@ -15,7 +15,7 @@
     "npm": ">=3.0.0"
   },
   "eslintConfig": {
-    "extends": "./configuration/eslint.js"
+    "extends": "./configuration/eslint/eslint.js"
   },
   "nyc": {
     "sourceMap": false,

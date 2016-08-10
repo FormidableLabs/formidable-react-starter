@@ -5,7 +5,7 @@ var chalk = require('chalk');
 var express = require('express');
 var favicon = require('serve-favicon');
 var webpack = require('webpack');
-var config = require('../configuration/webpack.config.dev');
+var config = require('../configuration/webpack/webpack.config.dev');
 var utils = require('./utils');
 
 process.env.NODE_ENV = 'development';

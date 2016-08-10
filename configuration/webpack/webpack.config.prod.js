@@ -14,7 +14,7 @@ module.exports = {
   bail: true,
   devtool: 'source-map',
   entry: [
-    require.resolve('./polyfills'),
+    require.resolve('../polyfills/polyfills'),
     path.join(src, 'index')
   ],
   output: {
@@ -47,7 +47,7 @@ module.exports = {
         test: /\.js$/,
         include: src,
         loader: 'babel',
-        query: require('./babel.prod')
+        query: require('../babel/babel.prod')
       },
       {
         test: /\.css$/,
@@ -84,7 +84,7 @@ module.exports = {
     ]
   },
   eslint: {
-    configFile: path.join(__dirname, 'eslint.js'),
+    configFile: path.join(__dirname, '../eslint/eslint.js'),
     useEslintrc: false
   },
   postcss: function() {
