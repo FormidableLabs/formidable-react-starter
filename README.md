@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/FormidableLabs/formidable-react-starter.svg?token=eGjDqfypeqevtBUpJGYD&branch=master)](https://travis-ci.com/FormidableLabs/formidable-react-starter) [![Coverage Status](https://coveralls.io/repos/github/FormidableLabs/formidable-react-starter/badge.svg?branch=master)](https://coveralls.io/github/FormidableLabs/formidable-react-starter?branch=master)
+
 #react-app-starter
 
 This is an app starter with the latest and greatest.
