@@ -1,6 +1,7 @@
 language: node_js
 
 node_js:
+  - 4.2
   - 5
   - 6
 
@@ -10,6 +11,11 @@ sudo: false
 branches:
   only:
     - master
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
 
 before_install:
   - export DISPLAY=:99.0
