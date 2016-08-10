@@ -4,7 +4,8 @@
   "license": "MIT",
   "repository": "https://github.com/FormidableLabs/formidable-react-starter",
   "scripts": {
-    "build": "node scripts/build.js",
+    "build": "npm run clean && webpack --config configuration/webpack/webpack.config.prod.js",
+    "clean": "rimraf build",
     "dev": "node server/development.js",
     "lint": "eslint src",
     "prod": "cross-env NODE_ENV=production PORT=3000 node server/production.js",
@@ -47,7 +48,6 @@
     "connect-history-api-fallback": "^1.3.0",
     "coveralls": "^2.11.12",
     "cross-env": "^2.0.0",
-    "cross-spawn": "^4.0.0",
     "css-loader": "^0.23.1",
     "css-modules-require-hook": "^4.0.1",
     "enzyme": "^2.4.1",
