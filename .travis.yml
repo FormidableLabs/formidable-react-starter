@@ -11,6 +11,7 @@ sudo: false
 branches:
   only:
     - master
+    - /^greenkeeper-.*$/
 
 notifications:
   email:
