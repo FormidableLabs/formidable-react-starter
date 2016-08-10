@@ -4,10 +4,10 @@
   "license": "MIT",
   "repository": "https://github.com/FormidableLabs/formidable-react-starter",
   "scripts": {
-    "build": "node ./scripts/build.js",
-    "dev": "node ./server/development.js",
+    "build": "node scripts/build.js",
+    "dev": "node server/development.js",
     "lint": "eslint src",
-    "prod": "cross-env NODE_ENV=production PORT=3000 node ./server/production.js",
+    "prod": "cross-env NODE_ENV=production PORT=3000 node server/production.js",
     "test": "nyc --reporter=lcov --reporter=text mocha test/.setup.js test/**/*.spec.js"
   },
   "eslintConfig": {
