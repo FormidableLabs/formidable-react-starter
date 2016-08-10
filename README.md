@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/FormidableLabs/formidable-react-starter.svg?branch=master)](https://travis-ci.org/FormidableLabs/formidable-react-starter)
 [![Build status](https://ci.appveyor.com/api/projects/status/3wj55bsrssqtl28v?svg=true)](https://ci.appveyor.com/project/kenwheeler/formidable-react-starter)
 [![Coverage Status](https://coveralls.io/repos/github/FormidableLabs/formidable-react-starter/badge.svg?branch=master)](https://coveralls.io/github/FormidableLabs/formidable-react-starter?branch=master)
+![Dependencies Status](https://david-dm.org/FormidableLabs/formidable-react-starter.svg)
 
 #react-app-starter
 
