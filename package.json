@@ -10,6 +10,10 @@
     "prod": "cross-env NODE_ENV=production PORT=3000 node server/production.js",
     "test": "nyc --reporter=lcov --reporter=text mocha test/.setup.js test/**/*.spec.js"
   },
+  "engineStrict": true,
+  "engines": {
+    "npm": ">=3.0.0"
+  },
   "eslintConfig": {
     "extends": "./configuration/eslint.js"
   },

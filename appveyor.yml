@@ -1,14 +1,20 @@
 environment:
   matrix:
     - nodejs_version: 4.2
+    - nodejs_version: 5
+    - nodejs_version: 6
 
 install:
   - ps: Install-Product node $env:nodejs_version
-  - npm install npm@next
+  - npm install npm@3
   - node_modules\.bin\npm install
 
 test_script:
   - node_modules\.bin\npm run test
+
+branches:
+  only:
+    - master
 
 build: off
 
