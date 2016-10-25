@@ -62,7 +62,7 @@
     "filesize": "^3.3.0",
     "gzip-size": "^3.0.0",
     "html-webpack-plugin": "^2.22.0",
-    "jsdom": "^9.4.1",
+    "jsdom": "^9.8.1",
     "json-loader": "^0.5.4",
     "mocha": "^3.0.2",
     "nyc": "^7.1.0",
