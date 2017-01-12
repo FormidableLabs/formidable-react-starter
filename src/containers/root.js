@@ -9,7 +9,7 @@ const Root = (props) => (
 );
 
 Root.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node
 };
 
 export default Root;

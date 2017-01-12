@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   parser: 'babel-eslint',
-  extends: 'airbnb',
+  extends: 'formidable/configurations/es6-react',
   env: {
     browser: true,
     commonjs: true,
@@ -22,9 +22,7 @@ module.exports = {
     },
   },
   rules: {
-    'global-require': 'off',
-    'import/no-unresolved': 'off',
-    'import/no-extraneous-dependencies': 'off',
+    'quotes': [2, 'single', { 'allowTemplateLiterals': true }],
     'react/jsx-filename-extension': 'off',
     'react/require-extension': 'off',
     'react/no-multi-comp': 'warn',

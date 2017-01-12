@@ -1,10 +1,10 @@
-var path = require('path');
-var autoprefixer = require('autoprefixer');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const autoprefixer = require('autoprefixer');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-var src = path.resolve('src');
-var node_modules = path.resolve('node_modules');
+const src = path.resolve('src');
+const nodeModules = path.resolve('node_modules');
 
 module.exports = {
   devtool: 'eval',
@@ -12,85 +12,74 @@ module.exports = {
     'webpack-hot-middleware/client?quiet=true&noInfo=true',
     require.resolve('react-hot-loader/patch'),
     require.resolve('../polyfills/polyfills'),
-    path.join(src, 'index'),
+    path.join(src, 'index')
   ],
   output: {
     path: path.resolve('build'),
     pathinfo: true,
     filename: 'static/js/bundle.js',
-    publicPath: '/',
+    publicPath: '/'
   },
   resolve: {
-    extensions: ['', '.js', '.json'],
-    packageMains: [
-      'jsnext:main',
-      'main',
-    ],
-  },
-  resolveLoader: {
-    root: node_modules,
-    moduleTemplates: ['*-loader'],
+    extensions: ['.js', '.json']
   },
   module: {
-    preLoaders: [
-      {
-        test: /\.js$/,
-        loader: 'eslint',
-        include: src,
-      },
-    ],
     loaders: [
       {
         test: /\.js$/,
         include: src,
-        loader: 'babel',
-        query: require('../babel/babel.dev'),
+        loader: 'babel-loader',
+        query: require('../babel/babel.dev')
       },
       {
         test: /\.css$/,
-        include: [src, node_modules],
-        loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss'
+        include: [src, nodeModules],
+        loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader'
       },
       {
         test: /\.json$/,
-        include: [src, node_modules],
-        loader: 'json',
+        include: [src, nodeModules],
+        loader: 'json-loader'
       },
       {
         test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)(\?.*)?$/,
-        include: [src, node_modules],
-        loader: 'file',
+        include: [src, nodeModules],
+        loader: 'file-loader',
         query: {
-          name: 'static/media/[name].[ext]',
-        },
+          name: 'static/media/[name].[ext]'
+        }
       },
       {
         test: /\.(mp4|webm)(\?.*)?$/,
-        include: [src, node_modules],
-        loader: 'url',
+        include: [src, nodeModules],
+        loader: 'url-loader',
         query: {
           limit: 10000,
-          name: 'static/media/[name].[ext]',
-        },
-      },
-    ],
-  },
-  eslint: {
-    configFile: path.resolve('./configuration/eslint/eslint.js'),
-    useEslintrc: false,
-  },
-  postcss: function() {
-    return [autoprefixer];
+          name: 'static/media/[name].[ext]'
+        }
+      }
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
       inject: true,
       template: path.resolve('index.html'),
-      favicon: path.resolve('favicon.png'),
+      favicon: path.resolve('favicon.png')
+    }),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        eslint: {
+          configFile: path.resolve('./configuration/eslint/eslint.js'),
+          useEslintrc: false
+        },
+        postcss() {
+          return [autoprefixer];
+        }
+      }
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
     // Note: only CSS is currently hot reloaded
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-  ],
+    new webpack.NoEmitOnErrorsPlugin()
+  ]
 };
