@@ -20,3 +20,13 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve('./build/index.html'));
 });
 
+app.listen(PORT, (err) => {
+  if (err) {
+    console.log(err);
+    return;
+  }
+
+  utils.clearConsole();
+  console.log(chalk.cyan('Production server started on port ' + PORT));
+  console.log();
+});
