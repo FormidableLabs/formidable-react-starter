@@ -1,14 +1,16 @@
-var path = require('path');
-var autoprefixer = require('autoprefixer');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var url = require('url');
+const path = require('path');
+const autoprefixer = require('autoprefixer');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 
-var src = path.resolve('src');
-var node_modules = path.resolve('node_modules');
+const src = path.resolve('src');
+const nodeModules = path.resolve('node_modules');
 
-var publicPath = '/';
+const publicPath = '/';
 
 module.exports = {
   bail: true,
@@ -21,61 +23,47 @@ module.exports = {
     path: path.resolve('build'),
     filename: 'static/js/[name].[chunkhash:8].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
-    publicPath: publicPath
+    publicPath
   },
   resolve: {
-    extensions: ['', '.js', '.json'],
-    packageMains: [
-      'jsnext:main',
-      'main',
-    ],
-  },
-  resolveLoader: {
-    root: node_modules,
-    moduleTemplates: ['*-loader']
+    extensions: ['.js', '.json']
   },
   module: {
-    preLoaders: [
-      {
-        test: /\.js$/,
-        loader: 'eslint',
-        include: src
-      }
-    ],
     loaders: [
       {
         test: /\.js$/,
         include: src,
-        loader: 'babel',
+        loader: 'babel-loader',
         query: require('../babel/babel.prod')
       },
       {
         test: /\.css$/,
-        include: [src, node_modules],
+        include: [src, nodeModules],
         loader: ExtractTextPlugin.extract(
           {
-            fallbackLoader: 'style',
-            loader: 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]-autoprefixer!postcss',
+            fallbackLoader: 'style-loader',
+            loader: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]-autoprefixer!postcss-loader'
           }
-        ),
+        )
       },
       {
         test: /\.json$/,
-        include: [src, node_modules],
-        loader: 'json'
+        include: [src, nodeModules],
+        loader: 'json-loader',
+        exclude: /manifest.json$/
       },
       {
         test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)(\?.*)?$/,
-        include: [src, node_modules],
-        loader: 'file',
+        include: [src, nodeModules],
+        loader: 'file-loader',
         query: {
           name: 'static/media/[name].[hash:8].[ext]'
         }
       },
       {
         test: /\.(mp4|webm)(\?.*)?$/,
-        include: [src, node_modules],
-        loader: 'url',
+        include: [src, nodeModules],
+        loader: 'url-loader',
         query: {
           limit: 10000,
           name: 'static/media/[name].[hash:8].[ext]'
@@ -83,18 +71,12 @@ module.exports = {
       }
     ]
   },
-  eslint: {
-    configFile: path.join(__dirname, '../eslint/eslint.js'),
-    useEslintrc: false
-  },
-  postcss: function() {
-    return [autoprefixer];
-  },
   plugins: [
     new HtmlWebpackPlugin({
-      inject: true,
+      inject: 'body',
       template: path.resolve('index.html'),
       favicon: path.resolve('favicon.png'),
+      inlineSource: '.(js|css)$',
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -108,9 +90,20 @@ module.exports = {
         minifyURLs: true
       }
     }),
+    new HtmlWebpackInlineSourcePlugin(),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        eslint: {
+          configFile: path.resolve('./configuration/eslint/eslint.js'),
+          useEslintrc: false
+        },
+        postcss() {
+          return [autoprefixer];
+        }
+      }
+    }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"production"' }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         screw_ie8: true,
@@ -124,6 +117,16 @@ module.exports = {
         screw_ie8: true
       }
     }),
-    new ExtractTextPlugin('static/css/[name].[contenthash:8].css')
+    new ExtractTextPlugin('static/css/[name].[contenthash:8].css'),
+    new CopyWebpackPlugin([
+        { from: 'public' },
+        { from: 'manifest.webmanifest' }
+    ]),
+    new SWPrecacheWebpackPlugin(
+      {
+        cacheId: 'formidable-react-starter',
+        filename: 'service-worker.js'
+      }
+    )
   ]
 };

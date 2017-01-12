@@ -28,7 +28,7 @@ const rootRoutes = {
         System.import('../components/home')
           .then(loadModule(cb))
           .catch(errorLoading);
-      },
+      }
     },
     {
       path: 'page2',
@@ -36,9 +36,9 @@ const rootRoutes = {
         System.import('../components/page2')
           .then(loadModule(cb))
           .catch(errorLoading);
-      },
-    },
-  ],
+      }
+    }
+  ]
 };
 
 const Routes = () => <Router history={browserHistory} routes={rootRoutes} />;
