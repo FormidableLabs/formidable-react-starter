@@ -15,7 +15,7 @@ if (process.env.NODE_ENV !== 'development') {
     <Routes />,
     document.getElementById('root')
   );
-  
+
 } else {
   ReactDOM.render(
     <AppContainer errorReporter={Redbox}>
