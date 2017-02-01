@@ -13,7 +13,6 @@ process.env.NODE_ENV = 'development';
 var PORT = process.env.PORT || 3000;
 
 // Set up compiler
-
 var compiler = webpack(config);
 
 compiler.plugin('invalid', () => {
@@ -21,22 +20,21 @@ compiler.plugin('invalid', () => {
   console.log('Compiling...');
 });
 
-compiler.plugin('done', (stats) => {
+compiler.plugin('done', stats => {
   utils.formatStats(stats, PORT);
 });
 
 // Launch server
-
 var app = express();
 
-app.use(historyApiFallback({
-  verbose: false
-}));
+app.use(historyApiFallback({ verbose: false }));
 
-app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
-  publicPath: config.output.publicPath,
-}));
+app.use(
+  require('webpack-dev-middleware')(compiler, {
+    noInfo: true,
+    publicPath: config.output.publicPath
+  })
+);
 
 app.use(require('webpack-hot-middleware')(compiler));
 
@@ -46,7 +44,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve('index.html'));
 });
 
-app.listen(PORT, (err) => {
+app.listen(PORT, err => {
   if (err) {
     console.log(err);
     return;

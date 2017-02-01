@@ -2,9 +2,9 @@ module.exports = {
   babelrc: false,
   cacheDirectory: true,
   presets: [
-    'babel-preset-es2015',
-    'babel-preset-stage-0',
-    'babel-preset-react',
+    [ 'es2015', { loose: true, modules: false } ],
+    'stage-0',
+    'react'
   ],
-  plugins: ['react-hot-loader/babel'],
+  plugins: [ 'react-hot-loader/babel' ]
 };

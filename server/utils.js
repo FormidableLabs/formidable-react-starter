@@ -9,15 +9,12 @@ function isLikelyASyntaxError(message) {
 
 function formatMessage(message) {
   return message
-    .replace(
-      'Module build failed: SyntaxError:',
-      friendlySyntaxErrorLabel
-    )
+    .replace('Module build failed: SyntaxError:', friendlySyntaxErrorLabel)
     .replace(
       /Module not found: Error: Cannot resolve 'file' or 'directory'/,
       'Module not found:'
     )
-    .replace(/^\s*at\s.*:\d+:\d+[\s\)]*\n/gm, '') // at ... ...:x:y
+    .replace(/^\s*at\s.*:\d+:\d+[\s\)]*\n/gm, '')
     .replace('./~/css-loader!./~/postcss-loader!', '');
 }
 var clearConsole = () => {
@@ -37,11 +34,11 @@ var formatStats = (stats, port) => {
   }
 
   var json = stats.toJson();
-  var formattedErrors = json.errors.map(message =>
-    'Error in ' + formatMessage(message)
+  var formattedErrors = json.errors.map(
+    message => 'Error in ' + formatMessage(message)
   );
-  var formattedWarnings = json.warnings.map(message =>
-    'Warning in ' + formatMessage(message)
+  var formattedWarnings = json.warnings.map(
+    message => 'Warning in ' + formatMessage(message)
   );
 
   if (hasErrors) {
@@ -66,13 +63,17 @@ var formatStats = (stats, port) => {
     });
 
     console.log('You may use special comments to disable some warnings.');
-    console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
-    console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
+    console.log(
+      'Use ' +
+        chalk.yellow('// eslint-disable-next-line') +
+        ' to ignore the next line.'
+    );
+    console.log(
+      'Use ' +
+        chalk.yellow('/* eslint-disable */') +
+        ' to ignore all warnings in a file.'
+    );
   }
 };
 
-module.exports = {
-  formatStats: formatStats,
-  clearConsole: clearConsole,
-};
-
+module.exports = { formatStats: formatStats, clearConsole: clearConsole };

@@ -3,7 +3,7 @@ module.exports = {
   presets: [
     'babel-preset-es2015',
     'babel-preset-stage-0',
-    'babel-preset-react',
+    'babel-preset-react'
   ],
-  plugins: ['istanbul'],
+  plugins: [ 'istanbul' ]
 };

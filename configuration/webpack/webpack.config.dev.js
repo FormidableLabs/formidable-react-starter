@@ -20,9 +20,7 @@ module.exports = {
     filename: 'static/js/bundle.js',
     publicPath: '/'
   },
-  resolve: {
-    extensions: ['.js', '.json']
-  },
+  resolve: { extensions: [ '.js', '.json' ] },
   module: {
     loaders: [
       {
@@ -33,30 +31,21 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: [src, nodeModules],
+        include: [ src, nodeModules ],
         loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader'
       },
-      {
-        test: /\.json$/,
-        include: [src, nodeModules],
-        loader: 'json-loader'
-      },
+      { test: /\.json$/, include: [ src, nodeModules ], loader: 'json-loader' },
       {
         test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)(\?.*)?$/,
-        include: [src, nodeModules],
+        include: [ src, nodeModules ],
         loader: 'file-loader',
-        query: {
-          name: 'static/media/[name].[ext]'
-        }
+        query: { name: 'static/media/[name].[ext]' }
       },
       {
         test: /\.(mp4|webm)(\?.*)?$/,
-        include: [src, nodeModules],
+        include: [ src, nodeModules ],
         loader: 'url-loader',
-        query: {
-          limit: 10000,
-          name: 'static/media/[name].[ext]'
-        }
+        query: { limit: 10000, name: 'static/media/[name].[ext]' }
       }
     ]
   },
@@ -73,7 +62,7 @@ module.exports = {
           useEslintrc: false
         },
         postcss() {
-          return [autoprefixer];
+          return [ autoprefixer ];
         }
       }
     }),

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
@@ -11,11 +12,7 @@ if (process.env.NODE_ENV !== 'development') {
     navigator.serviceWorker.register('/service-worker.js');
   }
 
-  ReactDOM.render(
-    <Routes />,
-    document.getElementById('root')
-  );
-
+  ReactDOM.render(<Routes />, document.getElementById('root'));
 } else {
   ReactDOM.render(
     <AppContainer errorReporter={Redbox}>
@@ -28,10 +25,13 @@ if (process.env.NODE_ENV !== 'development') {
     module.hot.accept('./routes', () => {
       // TODO: Remove console override when
       // https://github.com/reactjs/react-router/issues/2704 is fixed
-      const orgError = console.error; // eslint-disable-line no-console
-      console.error = (message) => { // eslint-disable-line no-console
-        if (message && message.indexOf('You cannot change <Router routes>;') === -1) {
-          orgError.apply(console, [message]);
+      const orgError = console.error;
+      console.error = message => {
+        if (
+          message &&
+            message.indexOf('You cannot change <Router routes>;') === -1
+        ) {
+          orgError.apply(console, [ message ]);
         }
       };
 
