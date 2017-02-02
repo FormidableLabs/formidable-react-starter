@@ -1,6 +1,9 @@
 import React from 'react';
 
 export default getComponent => {
+  if (typeof window === 'undefined') {
+    return getComponent();
+  }
   return class AsyncComponent extends React.Component {
     static Component = null;
     mounted = false;
@@ -34,6 +37,7 @@ export default getComponent => {
       if (Component !== null) {
         return <Component {...this.props} />;
       }
+
       return null;
     }
   };

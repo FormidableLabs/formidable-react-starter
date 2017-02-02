@@ -1,10 +1,9 @@
 module.exports = {
-  babelrc: false,
   presets: [
-    [ 'es2015', { loose: true, modules: false } ],
-    'stage-0',
-    'react'
-  ].map(require.resolve),
+    [ 'babel-preset-es2015' ],
+    'babel-preset-stage-0',
+    'babel-preset-react'
+  ],
   plugins: [ 'babel-plugin-transform-react-constant-elements' ]
     .map(require.resolve)
     .concat([ [ require.resolve('babel-plugin-transform-runtime') ] ])

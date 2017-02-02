@@ -1,7 +1,7 @@
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const src = path.resolve('src');
 const nodeModules = path.resolve('node_modules');
@@ -32,7 +32,10 @@ module.exports = {
       {
         test: /\.css$/,
         include: [ src, nodeModules ],
-        loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader'
+        use: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]!postcss-loader'
+        })
       },
       { test: /\.json$/, include: [ src, nodeModules ], loader: 'json-loader' },
       {
@@ -50,11 +53,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      inject: true,
-      template: path.resolve('index.html'),
-      favicon: path.resolve('favicon.png')
-    }),
     new webpack.LoaderOptionsPlugin({
       options: {
         eslint: {
@@ -69,6 +67,7 @@ module.exports = {
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
     // Note: only CSS is currently hot reloaded
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new ExtractTextPlugin('styles.css')
   ]
 };

@@ -1,4 +1,6 @@
 /* eslint-disable */
+require('./hook');
+
 var path = require('path');
 var fs = require('fs');
 var chalk = require('chalk');

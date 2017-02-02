@@ -1,4 +1,11 @@
 /* eslint-disable */
+const babelConfig = require('../configuration/babel/babel.dev');
+
+require('babel-register')(babelConfig);
+const hook = require('css-modules-require-hook');
+
+hook({ generateScopedName: '[name]__[local]' });
+
 var path = require('path');
 var historyApiFallback = require('connect-history-api-fallback');
 var chalk = require('chalk');
@@ -7,6 +14,12 @@ var favicon = require('serve-favicon');
 var webpack = require('webpack');
 var config = require('../configuration/webpack/webpack.config.dev');
 var utils = require('./utils');
+
+var React = require('react');
+var ReactDOMServer = require('react-dom/server');
+var StaticRouter = require('react-router-dom').StaticRouter;
+var Html = require('../src/components/html').default;
+var Routes = require('../src/routes/routes').default;
 
 process.env.NODE_ENV = 'development';
 
@@ -27,12 +40,12 @@ compiler.plugin('done', stats => {
 // Launch server
 var app = express();
 
-app.use(historyApiFallback({ verbose: false }));
-
+//app.use(historyApiFallback({ verbose: false }));
 app.use(
   require('webpack-dev-middleware')(compiler, {
     noInfo: true,
-    publicPath: config.output.publicPath
+    publicPath: config.output.publicPath,
+    serverSideRender: true
   })
 );
 
@@ -41,7 +54,25 @@ app.use(require('webpack-hot-middleware')(compiler));
 app.use(favicon('./favicon.png'));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve('index.html'));
+  const context = {};
+
+  const assetsByChunkName = res.locals.webpackStats.toJson().assetsByChunkName;
+
+  const Component = React.createElement(
+    StaticRouter,
+    { location: req.url, context: context },
+    React.createElement(Routes)
+  );
+
+  const markup = ReactDOMServer.renderToString(
+    React.createElement(Html, {
+      component: Component,
+      assets: assetsByChunkName
+    })
+  );
+
+  res.write(markup);
+  res.end();
 });
 
 app.listen(PORT, err => {
