@@ -5,10 +5,12 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import asyncRoute from './async-route';
 import Root from '../containers/root';
+import Header from '../components/header';
 
 const Routes = () => (
   <Router>
     <Root>
+      <Header />
       <Route
         exact
         path="/"

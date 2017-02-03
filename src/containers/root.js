@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import styles from './root.css';
 
 const Root = props => (
-  <div className={styles.container}>
+  <div className={styles.root}>
     {props.children}
   </div>
 );

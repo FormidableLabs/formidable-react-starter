@@ -1,4 +1,20 @@
-.container {
-  max-width: 1200px;
-  margin: auto;
+.root {
+  background: #fff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Futura,Century Gothic,AppleGothic,sans-serif;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+p {
+  font-family: Georgia,serif;
+  font-size: 15.75px;
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+a {
+  color: #ad1b11;
 }

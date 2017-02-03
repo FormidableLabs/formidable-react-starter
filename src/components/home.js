@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
-import styles from './home.css';
+import Container from './container';
 
 const Home = () => (
-  <div>
+  <Container>
     <Helmet title="Home" />
-    <h1 className={styles.heading}>WELCOME TO YOUR APP</h1>
+    <h1>Welcome to your app</h1>
     <Link to="/page2">Go to page 2</Link>
-  </div>
+  </Container>
 );
 
 export default Home;
