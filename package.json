@@ -30,7 +30,8 @@
     "react-helmet": "^4.0.0",
     "react-hot-loader": "^3.0.0-beta.2",
     "react-router-dom": "next",
-    "serve-favicon": "^2.3.0"
+    "serve-favicon": "^2.3.0",
+    "webpack-stats-plugin": "^0.1.4"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",

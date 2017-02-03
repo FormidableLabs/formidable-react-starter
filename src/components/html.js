@@ -22,6 +22,8 @@ export default class Html extends Component {
           {head.meta.toComponent()}
           {head.link.toComponent()}
           {head.script.toComponent()}
+          <meta name="theme-color" content="#db5945" />
+          <link rel="manifest" href="/manifest.webmanifest" />
           <link rel="shortcut icon" href="/favicon.ico" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           {assets.main

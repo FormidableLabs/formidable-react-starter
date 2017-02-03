@@ -8,6 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require(
   'html-webpack-inline-source-plugin'
 );
+const StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin;
 
 const src = path.resolve('src');
 const nodeModules = path.resolve('node_modules');
@@ -38,7 +39,7 @@ module.exports = {
         include: [ src, nodeModules ],
         loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
-          loader: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]-autoprefixer!postcss-loader'
+          loader: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]!postcss-loader'
         })
       },
       {
@@ -62,25 +63,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      inject: 'body',
-      template: path.resolve('index.html'),
-      favicon: path.resolve('favicon.png'),
-      inlineSource: '.(js|css)$',
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true
-      }
-    }),
-    new HtmlWebpackInlineSourcePlugin(),
     new webpack.LoaderOptionsPlugin({
       options: {
         eslint: {
@@ -102,11 +84,15 @@ module.exports = {
     new ExtractTextPlugin('static/css/[name].[contenthash:8].css'),
     new CopyWebpackPlugin([
       { from: 'public' },
-      { from: 'manifest.webmanifest' }
+      { from: 'manifest.webmanifest' },
+      { from: 'favicon.png' }
     ]),
     new SWPrecacheWebpackPlugin({
       cacheId: 'formidable-react-starter',
       filename: 'service-worker.js'
+    }),
+    new StatsWriterPlugin({
+      filename: 'stats.json'
     })
   ]
 };
