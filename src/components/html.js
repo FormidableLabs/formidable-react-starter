@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom/server';
-import { AppContainer } from 'react-hot-loader';
 import Helmet from 'react-helmet';
 
 export default class Html extends Component {

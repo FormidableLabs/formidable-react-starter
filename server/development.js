@@ -53,6 +53,8 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 app.use(favicon('./favicon.png'));
 
+app.use(express.static('./public'));
+
 app.get('*', (req, res) => {
   const context = {};
 

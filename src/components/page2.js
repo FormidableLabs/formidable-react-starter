@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
-import styles from './page2.css';
+import Container from './container';
 
 const Page2 = () => (
-  <div>
+  <Container>
     <Helmet title="Page 2" />
-    <h1 className={styles.heading}>OH DANG ITS PAGE2</h1>
+    <h1>Page 2</h1>
     <Link to="/">Go back</Link>
-  </div>
+  </Container>
 );
 
 export default Page2;
