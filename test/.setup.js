@@ -4,6 +4,8 @@ require('babel-register')(babelConfig);
 // Deobfuscate CSS modules classes for testing
 require('css-modules-require-hook')({ generateScopedName: '[local]' });
 
+require.extensions['.svg'] = () => null;
+
 var jsdom = require('jsdom').jsdom;
 
 var chai = require('chai');
