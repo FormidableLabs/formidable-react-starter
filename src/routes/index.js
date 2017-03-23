@@ -1,46 +1,27 @@
+/* eslint-disable no-console */
 import React from 'react';
-import { Router, browserHistory } from 'react-router';
 
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+import asyncRoute from './async-route';
 import Root from '../containers/root';
+import Header from '../components/header';
 
-if (process.env.NODE_ENV === 'development' && module.hot) {
-  // HMR falls over when a Route uses a dynamic component resolution
-  // property (i.e. getComponent or getComponents).  As a workaround for any
-  // of your components that are resolved dynamically please require them below.
-  require('../components/home');
-  require('../components/page2');
-}
-
-const errorLoading = (err) => {
-  console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
-};
-
-const loadModule = (cb) => (componentModule) => {
-  cb(null, componentModule.default);
-};
-
-const rootRoutes = {
-  component: Root,
-  childRoutes: [
-    {
-      path: '/',
-      getComponent(nextState, cb) {
-        System.import('../components/home')
-          .then(loadModule(cb))
-          .catch(errorLoading);
-      }
-    },
-    {
-      path: 'page2',
-      getComponent(nextState, cb) {
-        System.import('../components/page2')
-          .then(loadModule(cb))
-          .catch(errorLoading);
-      }
-    }
-  ]
-};
-
-const Routes = () => <Router history={browserHistory} routes={rootRoutes} />;
+const Routes = () => (
+  <Router>
+    <Root>
+      <Header />
+      <Route
+        exact
+        path="/"
+        component={asyncRoute(() => System.import('../components/home'))}
+      />
+      <Route
+        path="/page2"
+        component={asyncRoute(() => System.import('../components/page2'))}
+      />
+    </Root>
+  </Router>
+);
 
 export default Routes;
