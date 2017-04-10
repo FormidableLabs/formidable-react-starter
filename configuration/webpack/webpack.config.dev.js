@@ -6,6 +6,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const src = path.resolve('src');
 const nodeModules = path.resolve('node_modules');
 
+
+process.traceDeprecation = true;
 module.exports = {
   devtool: 'eval',
   entry: [
@@ -20,32 +22,58 @@ module.exports = {
     filename: 'static/js/bundle.js',
     publicPath: '/'
   },
-  resolve: { extensions: [ '.js', '.json' ] },
+  resolve: { extensions: ['.js', '.json'] },
   module: {
     loaders: [
       {
         test: /\.js$/,
         include: src,
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        options: {
+          configFile: path.resolve('./configuration/eslint/eslint.js'),
+          useEslintrc: false
+        }
+      },
+      {
+        test: /\.js$/,
+        include: src,
         loader: 'babel-loader',
-        query: require('../babel/babel.dev')
+        options: require('../babel/babel.dev')
       },
       {
         test: /\.css$/,
-        include: [ src, nodeModules ],
-        loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader'
+        include: [src, nodeModules],
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 1,
+              localIdentname: '[name]__[local]___[hash:base64:5]'
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [autoprefixer]
+            }
+          }
+        ]
       },
-      { test: /\.json$/, include: [ src, nodeModules ], loader: 'json-loader' },
+      { test: /\.json$/, include: [src, nodeModules], loader: 'json-loader' },
       {
         test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)(\?.*)?$/,
-        include: [ src, nodeModules ],
+        include: [src, nodeModules],
         loader: 'file-loader',
-        query: { name: 'static/media/[name].[ext]' }
+        options: { name: 'static/media/[name].[ext]' }
       },
       {
         test: /\.(mp4|webm)(\?.*)?$/,
-        include: [ src, nodeModules ],
+        include: [src, nodeModules],
         loader: 'url-loader',
-        query: { limit: 10000, name: 'static/media/[name].[ext]' }
+        options: { limit: 10000, name: 'static/media/[name].[ext]' }
       }
     ]
   },
@@ -54,17 +82,6 @@ module.exports = {
       inject: true,
       template: path.resolve('index.html'),
       favicon: path.resolve('favicon.png')
-    }),
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        eslint: {
-          configFile: path.resolve('./configuration/eslint/eslint.js'),
-          useEslintrc: false
-        },
-        postcss() {
-          return [ autoprefixer ];
-        }
-      }
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
     // Note: only CSS is currently hot reloaded

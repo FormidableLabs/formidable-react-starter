@@ -17,14 +17,14 @@ const publicPath = '/';
 module.exports = {
   bail: true,
   devtool: 'source-map',
-  entry: [ require.resolve('../polyfills/polyfills'), path.join(src, 'index') ],
+  entry: [require.resolve('../polyfills/polyfills'), path.join(src, 'index')],
   output: {
     path: path.resolve('build'),
     filename: 'static/js/[name].[chunkhash:8].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
     publicPath
   },
-  resolve: { extensions: [ '.js', '.json' ] },
+  resolve: { extensions: ['.js', '.json'] },
   module: {
     loaders: [
       {
@@ -35,29 +35,44 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        include: [ src, nodeModules ],
+        include: [src, nodeModules],
         loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          loader: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]-autoprefixer!postcss-loader'
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                importLoaders: 1,
+                localIdentname: '[name]__[local]___[hash:base64:5]-autoprefixer'
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: () => [autoprefixer]
+              }
+            }
+          ]
         })
       },
       {
         test: /\.json$/,
-        include: [ src, nodeModules ],
+        include: [src, nodeModules],
         loader: 'json-loader',
         exclude: /manifest.json$/
       },
       {
         test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)(\?.*)?$/,
-        include: [ src, nodeModules ],
+        include: [src, nodeModules],
         loader: 'file-loader',
-        query: { name: 'static/media/[name].[hash:8].[ext]' }
+        options: { name: 'static/media/[name].[hash:8].[ext]' }
       },
       {
         test: /\.(mp4|webm)(\?.*)?$/,
-        include: [ src, nodeModules ],
+        include: [src, nodeModules],
         loader: 'url-loader',
-        query: { limit: 10000, name: 'static/media/[name].[hash:8].[ext]' }
+        options: { limit: 10000, name: 'static/media/[name].[hash:8].[ext]' }
       }
     ]
   },
@@ -86,9 +101,6 @@ module.exports = {
         eslint: {
           configFile: path.resolve('./configuration/eslint/eslint.js'),
           useEslintrc: false
-        },
-        postcss() {
-          return [ autoprefixer ];
         }
       }
     }),
