@@ -2,12 +2,9 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 const src = path.resolve('src');
 const nodeModules = path.resolve('node_modules');
 
-
-process.traceDeprecation = true;
 module.exports = {
   devtool: 'eval',
   entry: [
