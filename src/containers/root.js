@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './root.css';
 
@@ -8,6 +9,8 @@ const Root = props => (
   </div>
 );
 
-Root.propTypes = { children: PropTypes.node };
+Root.propTypes = {
+  children: PropTypes.node
+};
 
 export default Root;
